@@ -15,20 +15,12 @@ pipeline {
         }
       }
     }
-    stage('Install Node.js and Check Version') {
+    stage('Check Node.js Version') {
       agent {
-        docker { image 'ubuntu:20.04' } // Use Ubuntu as the base image
+        docker { image 'node:16-alpine' } // Use a Node.js Docker image
       }
       steps {
-        script {
-          sh '''
-          apt-get update
-          apt-get install -y curl
-          curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-          apt-get install -y nodejs
-          node --version
-          '''
-        }
+        sh 'node --version' // Verify Node.js version
       }
     }
   }
