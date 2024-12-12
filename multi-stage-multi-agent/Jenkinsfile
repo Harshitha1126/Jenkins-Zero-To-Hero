@@ -1,20 +1,34 @@
 pipeline {
   agent none
   stages {
-    stage('Back-end') {
+    stage('Install Maven') {
       agent {
-        docker { image 'maven:3.8.1-adoptopenjdk-11' }
+        docker { image 'ubuntu:20.04' } // Use Ubuntu as the base image
       }
       steps {
-        sh 'sudo apt install maven -y'
+        script {
+          sh '''
+          apt-get update
+          apt-get install -y maven
+          mvn --version
+          '''
+        }
       }
     }
-    stage('Front-end') {
+    stage('Install Node.js and Check Version') {
       agent {
-        docker { image 'node:16-alpine' }
+        docker { image 'ubuntu:20.04' } // Use Ubuntu as the base image
       }
       steps {
-        sh 'node --version'
+        script {
+          sh '''
+          apt-get update
+          apt-get install -y curl
+          curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+          apt-get install -y nodejs
+          node --version
+          '''
+        }
       }
     }
   }
