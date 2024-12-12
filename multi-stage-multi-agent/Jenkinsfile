@@ -3,15 +3,15 @@ pipeline {
   stages {
     stage('Back-end') {
       agent {
-        docker { image 'maven:3.8.1-adoptopenjdk-11' }
+        docker { image 'nodejs:4.2.1' }
       }
       steps {
-        sh 'mvn --version'
+        sh 'nvm install 4.2.1'
       }
     }
     stage('Front-end') {
       agent {
-        docker { image 'node:16-alpine' }
+        docker { image 'node:17-alpine' }
       }
       steps {
         sh 'node --version'
