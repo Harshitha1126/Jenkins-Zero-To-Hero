@@ -3,24 +3,25 @@ pipeline {
   stages {
     stage('Install Maven') {
       agent {
-        docker { image 'ubuntu:20.04' } // Use Ubuntu as the base image
+        docker { 
+          image 'ubuntu:20.04'
+          args '-u root' // Run the container as root user
+        }
       }
       steps {
-        script {
-          sh '''
-          apt-get update
-          apt-get install -y maven
-          mvn --version
-          '''
-        }
+        sh '''
+        apt-get update
+        apt-get install -y maven
+        mvn --version
+        '''
       }
     }
     stage('Check Node.js Version') {
       agent {
-        docker { image 'node:16-alpine' } // Use a Node.js Docker image
+        docker { image 'node:16-alpine' }
       }
       steps {
-        sh 'node --version' // Verify Node.js version
+        sh 'node --version'
       }
     }
   }
