@@ -5,7 +5,7 @@ pipeline {
       agent {
         docker { 
           image 'ubuntu:20.04'
-          args '-u root' // Run the container as root user
+          args '-u root' // Run the container as root user//sudo commands not worked because of the default container
         }
       }
       steps {
